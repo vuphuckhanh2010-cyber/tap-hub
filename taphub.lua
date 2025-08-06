@@ -19,7 +19,7 @@ tpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 tpBtn.TextColor3 = Color3.new(1, 1, 1)
 tpBtn.Parent = frame
 
-local sellerPosition = Vector3.new(65, 2, 0.4)
+local sellerPosition = Vector3.new(65.385, 2.766, 0.406)
 
 tpBtn.MouseButton1Click:Connect(function()
 	local character = player.Character or player.CharacterAdded:Wait()
@@ -32,5 +32,6 @@ tpBtn.MouseButton1Click:Connect(function()
 		warn("⚠️ Không tìm thấy HumanoidRootPart.")
 	end
 end)
+
 
 
