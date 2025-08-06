@@ -19,19 +19,21 @@ tpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 tpBtn.TextColor3 = Color3.new(1, 1, 1)
 tpBtn.Parent = frame
 
-local sellerPosition = Vector3.new(65.385, 2.766, 0.406)
-
 tpBtn.MouseButton1Click:Connect(function()
 	local character = player.Character or player.CharacterAdded:Wait()
 	local hrp = character:FindFirstChild("HumanoidRootPart")
+	local sellStand = workspace:FindFirstChild("NPCS") and workspace.NPCS:FindFirstChild("Sell Stands")
 
-	if hrp then
-		hrp.CFrame = CFrame.new(sellerPosition)
-		print("✅ Đã dịch chuyển đến người bán.")
+	if hrp and sellStand and sellStand:IsA("Model") and (sellStand.PrimaryPart or sellStand:FindFirstChild("HumanoidRootPart")) then
+		local targetPart = sellStand.PrimaryPart or sellStand:FindFirstChild("HumanoidRootPart")
+		local offset = Vector3.new(0, 0, -4) -- đứng cách 4 studs phía trước
+		hrp.CFrame = CFrame.new(targetPart.Position + offset, targetPart.Position)
+		print("✅ Teleported to Sell Stand")
 	else
-		warn("⚠️ Không tìm thấy HumanoidRootPart.")
+		warn("⚠️ Không tìm thấy NPC 'Sell Stands' hoặc HumanoidRootPart/PrimaryPart")
 	end
 end)
+
 
 
 
