@@ -107,9 +107,18 @@ game.Players.PlayerAdded:Connect(function(player)
 	coins.Parent = stats
 end)
 
+local tpBtn = Instance.new("TextButton")
+tpBtn.Size = UDim2.new(1, -20, 0, 40)
+tpBtn.Position = UDim2.new(0, 10, 0, 10)
+tpBtn.Text = "SellInventoryEventr"
+tpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+tpBtn.TextColor3 = Color3.new(1, 1, 1)
+tpBtn.Parent = frame
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local sellEvent = ReplicatedStorage:WaitForChild("SellInventoryEvent")
 
 script.Parent.MouseButton1Click:Connect(function()
 	sellEvent:FireServer()
 end)
+
