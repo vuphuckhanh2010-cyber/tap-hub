@@ -63,6 +63,35 @@ local function sellInventory(player)
 		end
 	end
 
+if totalValue > 0 then
+		local leaderstats = player:FindFirstChild("leaderstats")
+		if leaderstats then
+			local coins = leaderstats:FindFirstChild("Coins") or leaderstats:FindFirstChild("Money")
+			if coins then
+				coins.Value += totalValue
+			end
+		end
+	end
+end
+sellEvent.OnServerEvent:Connect(sellInventory)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local sellEvent = ReplicatedStorage:WaitForChild("SellInventoryEvent")
+
+script.Parent.MouseButton1Click:Connect(function()
+	sellEvent:FireServer()
+end)
+
+game.Players.PlayerAdded:Connect(function(player)
+	local stats = Instance.new("Folder")
+	stats.Name = "leaderstats"
+	stats.Parent = player
+
+	local coins = Instance.new("IntValue")
+	coins.Name = "Coins"
+	coins.Value = 0
+	coins.Parent = stats
+end)
 
 
 
