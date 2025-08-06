@@ -43,6 +43,39 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Tạo ScreenGui
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "SellGui"
+screenGui.ResetOnSpawn = false
+screenGui.Parent = playerGui
+
+-- Tạo nút Sell
+local button = Instance.new("TextButton")
+button.Name = "SellButton"
+button.Text = "💰 Sell Inventory"
+button.Size = UDim2.new(0, 180, 0, 50)
+button.Position = UDim2.new(0.5, -90, 0.85, 0)
+button.BackgroundColor3 = Color3.fromRGB(50, 200, 100)
+button.TextColor3 = Color3.new(1,1,1)
+button.Font = Enum.Font.SourceSansBold
+button.TextSize = 20
+button.Parent = screenGui
+
+-- Gắn sự kiện bán hàng
+button.MouseButton1Click:Connect(function()
+	local sellEvent = ReplicatedStorage:FindFirstChild("SellInventoryEvent")
+	if sellEvent then
+		sellEvent:FireServer()
+	else
+		warn("Không tìm thấy SellInventoryEvent")
+	end
+end)
+
 -- SellInventoryHandler (ServerScriptService)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -107,18 +140,6 @@ game.Players.PlayerAdded:Connect(function(player)
 	coins.Parent = stats
 end)
 
-local tpBtn = Instance.new("TextButton")
-tpBtn.Size = UDim2.new(1, -20, 0, 40)
-tpBtn.Position = UDim2.new(0, 10, 0, 10)
-tpBtn.Text = "SellInventoryEventr"
-tpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-tpBtn.TextColor3 = Color3.new(1, 1, 1)
-tpBtn.Parent = frame
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local sellEvent = ReplicatedStorage:WaitForChild("SellInventoryEvent")
 
-script.Parent.MouseButton1Click:Connect(function()
-	sellEvent:FireServer()
-end)
 
