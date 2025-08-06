@@ -106,3 +106,10 @@ game.Players.PlayerAdded:Connect(function(player)
 	coins.Value = 0
 	coins.Parent = stats
 end)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local sellEvent = ReplicatedStorage:WaitForChild("SellInventoryEvent")
+
+script.Parent.MouseButton1Click:Connect(function()
+	sellEvent:FireServer()
+end)
