@@ -43,24 +43,7 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
-local sellStand = workspace:FindFirstChild("Sell Stands")
-if not sellStand then
-    warn("❌ Không tìm thấy Sell Stands trong workspace.")
-    return
-end
 
-local dialog = sellStand:FindFirstChildWhichIsA("Dialog", true)
-if not dialog then
-    warn("❌ Không tìm thấy Dialog trong Sell Stands.")
-    return
-end
-
-local distance = (hrp.Position - dialog.Parent.Position).Magnitude
-if distance <= dialog.ConversationDistance then
-    print("✅ Trong phạm vi, có thể mở giao tiếp bằng click thủ công.")
-else
-    warn("⚠️ Bạn đang ở quá xa để giao tiếp với NPC.")
-end
 
 
 
