@@ -12,7 +12,10 @@ tpBtn.Position = UDim2.new(0, 10, 0, 10)
 tpBtn.Text = "Teleport to Seller"
 tpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 
-tpBtn.MouseButton1Clickfunction()
-local targetPosition = Vector3.new(65, 2, 0.4)
-    endConnect(:
+tpBtn.MouseButton1Click:Connect(function()
+	local sellerPosition = Vector3.new(65, 2, 0.4)
+	if humanoidRootPart then
+		humanoidRootPart.CFrame = CFrame.new(sellerPosition)
+	end
 end)
+
