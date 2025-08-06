@@ -13,9 +13,14 @@ tpBtn.Text = "Teleport to Seller"
 tpBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
 
 tpBtn.MouseButton1Click:Connect(function()
+	local character = player.Character or player.CharacterAdded:Wait()
+	local hrp = character:FindFirstChild("HumanoidRootPart")
 	local sellerPosition = Vector3.new(65, 2, 0.4)
-	if humanoidRootPart then
-		humanoidRootPart.CFrame = CFrame.new(sellerPosition)
+
+	if hrp then
+		hrp.CFrame = CFrame.new(sellerPosition)
+		print("Đã dịch chuyển thành công.")
+	else
 	end
 end)
 
