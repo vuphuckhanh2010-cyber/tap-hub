@@ -43,28 +43,23 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local player = game.Players.LocalPlayer
 local playerGui = player:WaitForChild("PlayerGui")
 
--- Tạo ScreenGui
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "SellGui"
-screenGui.ResetOnSpawn = false
-screenGui.Parent = playerGui
+local gui = Instance.new("ScreenGui")
+gui.Name = "SellGui"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
 
--- Tạo nút Sell
 local button = Instance.new("TextButton")
-button.Name = "SellButton"
-button.Text = "💰 Sell Inventory"
-button.Size = UDim2.new(0, 180, 0, 50)
-button.Position = UDim2.new(0.5, -90, 0.85, 0)
-button.BackgroundColor3 = Color3.fromRGB(50, 200, 100)
-button.TextColor3 = Color3.new(1,1,1)
-button.Font = Enum.Font.SourceSansBold
-button.TextSize = 20
-button.Parent = screenGui
+button.Size = UDim2.new(0, 160, 0, 50)
+button.Position = UDim2.new(0.5, -80, 0.8, 0)
+button.Text = "Bán Inventory"
+button.Parent = gui
+
+button.MouseButton1Click:Connect(function()
+	print("✅ Đã nhấn nút bán!")
+end)
 
 -- Gắn sự kiện bán hàng
 button.MouseButton1Click:Connect(function()
@@ -139,6 +134,7 @@ game.Players.PlayerAdded:Connect(function(player)
 	coins.Value = 0
 	coins.Parent = stats
 end)
+
 
 
 
