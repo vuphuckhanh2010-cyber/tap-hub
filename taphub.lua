@@ -43,5 +43,13 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
+local sellStand = script.Parent
+local clickDetector = sellStand:WaitForChild("ClickDetector")
+
+local function onClick(player)
+	print(player.Name .. " đã kích hoạt Sell Stand!")
+end
+
+clickDetector.MouseClick:Connect(onClick)
 
 
