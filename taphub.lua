@@ -22,18 +22,26 @@ tpBtn.Parent = frame
 tpBtn.MouseButton1Click:Connect(function()
 	local character = player.Character or player.CharacterAdded:Wait()
 	local hrp = character:FindFirstChild("HumanoidRootPart")
+
 	local sellStand = workspace:FindFirstChild("NPCS") and workspace.NPCS:FindFirstChild("Sell Stands")
 
-	if hrp and sellStand and sellStand:IsA("Model") and (sellStand.PrimaryPart or sellStand:FindFirstChild("HumanoidRootPart")) then
+	if not workspace:FindFirstChild("NPCS") then
+		warn("⚠️ Không tìm thấy workspace.NPCS")
+	elseif not sellStand then
+		warn("⚠️ Không tìm thấy NPC 'Sell Stands' bên trong workspace.NPCS")
+	elseif not hrp then
+		warn("⚠️ Không tìm thấy HumanoidRootPart của nhân vật!")
+	elseif sellStand and hrp then
 		local targetPart = sellStand.PrimaryPart or sellStand:FindFirstChild("HumanoidRootPart")
-		local offset = Vector3.new(0, 0, -4) -- đứng cách 4 studs phía trước
-		hrp.CFrame = CFrame.new(targetPart.Position + offset, targetPart.Position)
-		print("✅ Teleported to Sell Stand")
-	else
-		warn("⚠️ Không tìm thấy NPC 'Sell Stands' hoặc HumanoidRootPart/PrimaryPart")
+		if targetPart then
+			local offset = Vector3.new(0, 0, -4)
+			hrp.CFrame = CFrame.new(targetPart.Position + offset, targetPart.Position)
+			print("✅ Đã dịch chuyển đến Sell Stands.")
+		else
+			warn("⚠️ Sell Stands không có PrimaryPart hoặc HumanoidRootPart!")
+		end
 	end
 end)
-
 
 
 
