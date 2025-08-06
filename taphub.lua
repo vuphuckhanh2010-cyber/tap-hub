@@ -1,37 +1,31 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
 local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
 
--- GUI container
+-- Tạo giao diện bán
 local gui = Instance.new("ScreenGui")
-gui.Name = "SellGUI"
-gui.Parent = playerGui
+gui.Name = "SellGui"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
 
-local frame = Instance.new("Frame")
-frame.Size = UDim2.new(0, 200, 0, 80)
-frame.Position = UDim2.new(0, 50, 0, 100)
-frame.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
-frame.Parent = gui
-
--- Sell Button only
 local sellBtn = Instance.new("TextButton")
-sellBtn.Size = UDim2.new(1, -20, 0, 50)
-sellBtn.Position = UDim2.new(0, 10, 0, 15)
+sellBtn.Size = UDim2.new(0, 200, 0, 50)
+sellBtn.Position = UDim2.new(0.5, -100, 0.8, 0)
 sellBtn.Text = "💰 Bán Inventory"
 sellBtn.BackgroundColor3 = Color3.fromRGB(100, 50, 50)
-sellBtn.TextColor3 = Color3.new(1, 1, 1)
-sellBtn.Parent = frame
+sellBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+sellBtn.Parent = gui
 
--- Sell handler
+-- Lấy SellInventoryEvent từ ReplicatedStorage
+local sellEvent = ReplicatedStorage:WaitForChild("SellInventoryEvent")
+
 sellBtn.MouseButton1Click:Connect(function()
-	local sellEvent = ReplicatedStorage:FindFirstChild("SellInventoryEvent")
-	if sellEvent then
-		sellEvent:FireServer()
-	else
-		warn("❌ Không tìm thấy SellInventoryEvent")
-	end
+	print("📨 Đang gửi yêu cầu bán inventory đến server...")
+	sellEvent:FireServer()
 end)
+
+
 
 
 
