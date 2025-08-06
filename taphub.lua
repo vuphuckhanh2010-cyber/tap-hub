@@ -43,6 +43,26 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
+local function sellInventory(player)
+	local inventory = player:FindFirstChild("Backpack")
+	if not inventory then
+		warn("❌ Không tìm thấy Backpack.")
+		return
+	end
+
+	local totalValue = 0
+
+	for _, item in pairs(inventory:GetChildren()) do
+		if item:IsA("Tool") then
+			-- Ở đây giả sử mỗi Tool có giá trị trong 1 thuộc tính: item.Value (NumberValue)
+			local valueObj = item:FindFirstChild("Value")
+			if valueObj and valueObj:IsA("NumberValue") then
+				totalValue += valueObj.Value
+				item:Destroy() -- Xoá item khỏi inventory
+			end
+		end
+	end
+
 
 
 
