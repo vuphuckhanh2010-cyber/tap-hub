@@ -43,20 +43,24 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
-game.Players.PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function()
-        wait(1)
-        local character = player.Character
-        local hrp = character:WaitForChild("HumanoidRootPart")
-        local targetPart = sellStand.PrimaryPart or sellStand:FindFirstChild("HumanoidRootPart")
-        if hrp and targetPart then
-            hrp.CFrame = CFrame.new(targetPart.Position + Vector3.new(0,0,-4), targetPart.Position)
-            print(player.Name .. " đã dịch chuyển đến Sell Stand!")
-            -- Gọi trực tiếp hàm bán hàng
-            SellInventory(player)
-        end
-    end)
-end)
+local sellStand = workspace:FindFirstChild("Sell Stands")
+if not sellStand then
+    warn("❌ Không tìm thấy Sell Stands trong workspace.")
+    return
+end
+
+local dialog = sellStand:FindFirstChildWhichIsA("Dialog", true)
+if not dialog then
+    warn("❌ Không tìm thấy Dialog trong Sell Stands.")
+    return
+end
+
+local distance = (hrp.Position - dialog.Parent.Position).Magnitude
+if distance <= dialog.ConversationDistance then
+    print("✅ Trong phạm vi, có thể mở giao tiếp bằng click thủ công.")
+else
+    warn("⚠️ Bạn đang ở quá xa để giao tiếp với NPC.")
+end
 
 
 
