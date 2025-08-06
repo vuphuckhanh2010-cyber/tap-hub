@@ -43,16 +43,21 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
-local sellStand = script.Parent
-local clickDetector = sellStand:WaitForChild("ClickDetector")
+game.Players.PlayerAdded:Connect(function(player)
+    player.CharacterAdded:Connect(function()
+        wait(1)
+        local character = player.Character
+        local hrp = character:WaitForChild("HumanoidRootPart")
+        local targetPart = sellStand.PrimaryPart or sellStand:FindFirstChild("HumanoidRootPart")
+        if hrp and targetPart then
+            hrp.CFrame = CFrame.new(targetPart.Position + Vector3.new(0,0,-4), targetPart.Position)
+            print(player.Name .. " đã dịch chuyển đến Sell Stand!")
+            -- Gọi trực tiếp hàm bán hàng
+            SellInventory(player)
+        end
+    end)
+end)
 
-clickDetector.MaxActivationDistance = 100 -- nếu muốn tăng khoảng cách click
-
-local function onClick(player)
-	print(player.Name .. " đã kích hoạt Sell Stand!")
-end
-
-clickDetector.MouseClick:Connect(onClick)
 
 
 
