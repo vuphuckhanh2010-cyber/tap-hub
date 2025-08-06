@@ -43,45 +43,59 @@ tpBtn.MouseButton1Click:Connect(function()
 	end
 end)
 
+-- SellInventoryHandler (ServerScriptService)
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+-- Tạo RemoteEvent nếu chưa tồn tại
+local sellEvent = ReplicatedStorage:FindFirstChild("SellInventoryEvent")
+if not sellEvent then
+	sellEvent = Instance.new("RemoteEvent")
+	sellEvent.Name = "SellInventoryEvent"
+	sellEvent.Parent = ReplicatedStorage
+end
+
+-- Khi người chơi nhấn nút bán
 local function sellInventory(player)
 	local inventory = player:FindFirstChild("Backpack")
 	if not inventory then
-		warn("❌ Không tìm thấy Backpack.")
+		warn("❌ Không tìm thấy Backpack cho người chơi: " .. player.Name)
 		return
 	end
 
 	local totalValue = 0
 
+	-- Tính tổng giá trị item và xoá
 	for _, item in pairs(inventory:GetChildren()) do
 		if item:IsA("Tool") then
-			-- Ở đây giả sử mỗi Tool có giá trị trong 1 thuộc tính: item.Value (NumberValue)
 			local valueObj = item:FindFirstChild("Value")
 			if valueObj and valueObj:IsA("NumberValue") then
 				totalValue += valueObj.Value
-				item:Destroy() -- Xoá item khỏi inventory
+				item:Destroy()
 			end
 		end
 	end
 
-if totalValue > 0 then
-		local leaderstats = player:FindFirstChild("leaderstats")
-		if leaderstats then
-			local coins = leaderstats:FindFirstChild("Coins") or leaderstats:FindFirstChild("Money")
+	-- Cộng tiền nếu có giá trị
+	if totalValue > 0 then
+		local stats = player:FindFirstChild("leaderstats")
+		if stats then
+			local coins = stats:FindFirstChild("Coins") or stats:FindFirstChild("Money")
 			if coins then
 				coins.Value += totalValue
+				print("✅ " .. player.Name .. " đã bán inventory được " .. totalValue .. " Coins.")
+			else
+				warn("⚠️ Không tìm thấy Coins trong leaderstats.")
 			end
 		end
+	else
+		print("⚠️ Không có item nào để bán.")
 	end
 end
+
 sellEvent.OnServerEvent:Connect(sellInventory)
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local sellEvent = ReplicatedStorage:WaitForChild("SellInventoryEvent")
-
-script.Parent.MouseButton1Click:Connect(function()
-	sellEvent:FireServer()
-end)
-
+-- Tạo leaderstats khi player vào game
 game.Players.PlayerAdded:Connect(function(player)
 	local stats = Instance.new("Folder")
 	stats.Name = "leaderstats"
@@ -92,8 +106,3 @@ game.Players.PlayerAdded:Connect(function(player)
 	coins.Value = 0
 	coins.Parent = stats
 end)
-
-
-
-
-
